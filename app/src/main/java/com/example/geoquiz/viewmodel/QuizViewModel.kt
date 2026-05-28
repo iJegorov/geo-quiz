@@ -27,8 +27,53 @@ class QuizViewModel : ViewModel() {
                 "N/A"
             )
 
+    // Statistics
+    var totalQuizzesPlayed by mutableStateOf(0)
+        private set
+
+    var totalCorrectAnswers by mutableStateOf(0)
+        private set
+
+    var totalQuestionsAnswered by mutableStateOf(0)
+        private set
+
+    var bestScore by mutableStateOf(0)
+        private set
+
+    var lastScore by mutableStateOf(0)
+        private set
+
+    var lastDifficultyPlayed by mutableStateOf("Easy")
+        private set
+
+    // Answer state
+    var selectedAnswer by mutableStateOf<String?>(null)
+        private set
+
+    var answerSubmitted by mutableStateOf(false)
+        private set
+
+    var totalPoints by mutableStateOf(0)
+        private set
+
+    var currentQuizPoints by mutableStateOf(0)
+        private set
+
+    val currentLevel: String
+        get() = when {
+
+            totalPoints >= 5000 -> "Cartographer"
+
+            totalPoints >= 1000 -> "Professional"
+
+            totalPoints >= 500 -> "Intermediate"
+
+            totalPoints >= 100 -> "Beginner"
+
+            else -> "Novice"
+        }
+
     init {
-        // ✅ Single source of truth initialization
         setDifficulty("Easy")
     }
 
@@ -41,15 +86,71 @@ class QuizViewModel : ViewModel() {
         score = 0
     }
 
-    fun answerQuestion(answer: String): Boolean {
+    private fun getCorrectPoints(): Int {
+
+        return when (selectedDifficulty) {
+
+            "Easy" -> 10
+
+            "Medium" -> 30
+
+            "Hard" -> 50
+
+            else -> 10
+        }
+    }
+
+    private fun getWrongPenalty(): Int {
+
+        return when (selectedDifficulty) {
+
+            "Easy" -> 5
+
+            "Medium" -> 15
+
+            "Hard" -> 25
+
+            else -> 5
+        }
+    }
+
+    fun answerQuestion(answer: String) {
+
+        if (answerSubmitted) return
+
+        selectedAnswer = answer
+        answerSubmitted = true
 
         val isCorrect = answer == currentQuestion.correctAnswer
 
-        Log.d("QuizDebug", "Is correct = $isCorrect")
-
         if (isCorrect) {
+
             score++
+            totalCorrectAnswers++
+
+            val earnedPoints = getCorrectPoints()
+
+            totalPoints += earnedPoints
+            currentQuizPoints += earnedPoints
+
+        } else {
+
+            val penalty = getWrongPenalty()
+
+            totalPoints -= penalty
+            currentQuizPoints -= penalty
+
+            // Prevent negative total points
+            if (totalPoints < 0) {
+                totalPoints = 0
+            }
         }
+
+        totalQuestionsAnswered++
+    }
+
+
+    fun moveToNextQuestion(): Boolean {
 
         val isLast = currentQuestionIndex == questions.lastIndex
 
@@ -57,11 +158,30 @@ class QuizViewModel : ViewModel() {
             currentQuestionIndex++
         }
 
+        selectedAnswer = null
+        answerSubmitted = false
+
         return isLast
+    }
+
+
+    fun finalizeQuiz() {
+
+        totalQuizzesPlayed++
+
+        lastScore = score
+        lastDifficultyPlayed = selectedDifficulty
+
+        if (score > bestScore) {
+            bestScore = score
+        }
     }
 
     fun resetQuiz() {
         setDifficulty(selectedDifficulty)
+        selectedAnswer = null
+        answerSubmitted = false
+        currentQuizPoints = 0
     }
 
     fun getTotalQuestions(): Int {

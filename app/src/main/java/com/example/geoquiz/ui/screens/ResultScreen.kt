@@ -24,18 +24,29 @@ fun ResultScreen(
 
         Text(text = "Score: ${viewModel.score} / ${viewModel.getTotalQuestions()}")
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = "Quiz points earned: ${viewModel.currentQuizPoints}"
+        )
+
+        Text(
+            text = "Total points: ${viewModel.totalPoints}"
+        )
+
+        Text(
+            text = "Current level: ${viewModel.currentLevel}"
+        )
 
         Button(
             onClick = {
                 viewModel.resetQuiz()
-
                 navController.navigate("home") {
                     popUpTo("home") { inclusive = true }
                 }
             }
         ) {
-            Text("Restart Quiz")
+            Text("Back To Menu")
         }
     }
 }
