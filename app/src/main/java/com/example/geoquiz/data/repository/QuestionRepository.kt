@@ -1,92 +1,40 @@
 package com.example.geoquiz.data.repository
 
+import android.content.Context
 import com.example.geoquiz.data.model.Question
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.io.InputStreamReader
 
 object QuestionRepository {
 
-    fun getQuestions(difficulty: String): List<Question> {
+    private var cachedQuestions: List<Question>? = null
 
-        return when (difficulty) {
+    fun loadQuestions(context: Context): List<Question> {
 
-            "Easy" -> easyQuestions()
-
-            "Medium" -> mediumQuestions()
-
-            "Hard" -> hardQuestions()
-
-            else -> easyQuestions()
+        if (cachedQuestions != null) {
+            return cachedQuestions!!
         }
+
+        val inputStream = context.assets.open("questions.json")
+        val reader = InputStreamReader(inputStream)
+
+        val type = object : TypeToken<List<Question>>() {}.type
+
+        cachedQuestions = Gson().fromJson(reader, type)
+
+        reader.close()
+
+        return cachedQuestions!!
     }
 
-    private fun easyQuestions(): List<Question> {
+    fun getQuestionsByDifficulty(
+        context: Context,
+        difficulty: String
+    ): List<Question> {
 
-        return listOf(
-
-            Question(
-                "What is the capital of France?",
-                listOf("Paris", "Berlin", "Madrid", "Rome"),
-                "Paris"
-            ),
-
-            Question(
-                "Which country has the maple leaf flag?",
-                listOf("USA", "Canada", "Australia", "UK"),
-                "Canada"
-            ),
-
-            Question(
-                "Which country is Tokyo the capital of?",
-                listOf("China", "Japan", "Thailand", "South Korea"),
-                "Japan"
-            )
-        )
-    }
-
-    private fun mediumQuestions(): List<Question> {
-
-        return listOf(
-
-            Question(
-                "What is the capital of Argentina?",
-                listOf("Buenos Aires", "Lima", "Santiago", "Bogota"),
-                "Buenos Aires"
-            ),
-
-            Question(
-                "Which country has the city of Marrakech?",
-                listOf("Egypt", "Morocco", "Tunisia", "Turkey"),
-                "Morocco"
-            ),
-
-            Question(
-                "What is the largest country in Africa?",
-                listOf("Nigeria", "Algeria", "Sudan", "Egypt"),
-                "Algeria"
-            )
-        )
-    }
-
-    private fun hardQuestions(): List<Question> {
-
-        return listOf(
-
-            Question(
-                "What is the capital of Kazakhstan?",
-                listOf("Astana", "Tashkent", "Bishkek", "Minsk"),
-                "Astana"
-            ),
-
-            Question(
-                "Which country owns the Faroe Islands?",
-                listOf("Norway", "Denmark", "Iceland", "Finland"),
-                "Denmark"
-            ),
-
-            Question(
-                "What is the smallest country in Africa?",
-                listOf("Seychelles", "Gambia", "Comoros", "Djibouti"),
-                "Seychelles"
-            )
-        )
+        return loadQuestions(context).filter {
+            it.difficulty == difficulty
+        }
     }
 }

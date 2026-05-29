@@ -4,9 +4,16 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import com.example.geoquiz.data.model.Question
 import com.example.geoquiz.data.repository.QuestionRepository
-import android.util.Log
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.geoquiz.data.datastore.StatsDataStore
+import kotlinx.coroutines.launch
 
-class QuizViewModel : ViewModel() {
+
+class QuizViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val statsDataStore = StatsDataStore(application)
 
     private var questions by mutableStateOf(listOf<Question>())
 
@@ -22,9 +29,10 @@ class QuizViewModel : ViewModel() {
     val currentQuestion: Question
         get() = questions.getOrNull(currentQuestionIndex)
             ?: Question(
-                "Loading question...",
-                listOf("N/A"),
-                "N/A"
+                difficulty = "Easy",
+                questionText = "Loading question...",
+                options = listOf("N/A"),
+                correctAnswer = "N/A"
             )
 
     // Statistics
@@ -75,15 +83,37 @@ class QuizViewModel : ViewModel() {
 
     init {
         setDifficulty("Easy")
+
+        viewModelScope.launch {
+
+            val savedStats = statsDataStore.loadStats()
+
+            totalPoints = savedStats.totalPoints
+            totalQuizzesPlayed = savedStats.totalQuizzes
+            bestScore = savedStats.bestScore
+            totalCorrectAnswers = savedStats.totalCorrect
+            totalQuestionsAnswered = savedStats.totalAnswered
+        }
     }
 
     fun setDifficulty(difficulty: String) {
         selectedDifficulty = difficulty
 
-        questions = QuestionRepository.getQuestions(difficulty)
+        questions = QuestionRepository
+            .getQuestionsByDifficulty(
+                getApplication(),
+                difficulty
+            )
+            .shuffled()          //random order
+            .take(7)             //limit to 7 questions
 
         currentQuestionIndex = 0
         score = 0
+
+        // reset UI state
+        selectedAnswer = null
+        answerSubmitted = false
+        currentQuizPoints = 0
     }
 
     private fun getCorrectPoints(): Int {
@@ -144,6 +174,10 @@ class QuizViewModel : ViewModel() {
             if (totalPoints < 0) {
                 totalPoints = 0
             }
+
+            if (currentQuizPoints < 0) {
+                currentQuizPoints = 0
+            }
         }
 
         totalQuestionsAnswered++
@@ -174,6 +208,21 @@ class QuizViewModel : ViewModel() {
 
         if (score > bestScore) {
             bestScore = score
+        }
+        saveStatistics()
+    }
+
+    private fun saveStatistics() {
+
+        viewModelScope.launch {
+
+            statsDataStore.saveStats(
+                totalPoints = totalPoints,
+                totalQuizzes = totalQuizzesPlayed,
+                bestScore = bestScore,
+                totalCorrect = totalCorrectAnswers,
+                totalAnswered = totalQuestionsAnswered
+            )
         }
     }
 
