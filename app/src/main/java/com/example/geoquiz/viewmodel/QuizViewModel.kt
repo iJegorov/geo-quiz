@@ -1,15 +1,13 @@
 package com.example.geoquiz.viewmodel
 
 import androidx.compose.runtime.*
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
+import android.app.Application
+import androidx.lifecycle.viewModelScope
 import com.example.geoquiz.data.model.Question
 import com.example.geoquiz.data.repository.QuestionRepository
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.geoquiz.data.datastore.StatsDataStore
 import kotlinx.coroutines.launch
-
 
 class QuizViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -29,13 +27,16 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
     val currentQuestion: Question
         get() = questions.getOrNull(currentQuestionIndex)
             ?: Question(
+                id = -1,
                 difficulty = "Easy",
                 questionText = "Loading question...",
                 options = listOf("N/A"),
                 correctAnswer = "N/A"
             )
 
-    // Statistics
+    // -------------------------
+    // STATS
+    // -------------------------
     var totalQuizzesPlayed by mutableStateOf(0)
         private set
 
@@ -54,7 +55,9 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
     var lastDifficultyPlayed by mutableStateOf("Easy")
         private set
 
-    // Answer state
+    // -------------------------
+    // ANSWER STATE
+    // -------------------------
     var selectedAnswer by mutableStateOf<String?>(null)
         private set
 
@@ -69,15 +72,10 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
 
     val currentLevel: String
         get() = when {
-
             totalPoints >= 5000 -> "Cartographer"
-
             totalPoints >= 1000 -> "Professional"
-
             totalPoints >= 500 -> "Intermediate"
-
             totalPoints >= 100 -> "Beginner"
-
             else -> "Novice"
         }
 
@@ -85,7 +83,6 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
         setDifficulty("Easy")
 
         viewModelScope.launch {
-
             val savedStats = statsDataStore.loadStats()
 
             totalPoints = savedStats.totalPoints
@@ -96,54 +93,49 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    // -------------------------
+    // DIFFICULTY + QUESTION LOAD
+    // -------------------------
     fun setDifficulty(difficulty: String) {
         selectedDifficulty = difficulty
 
+        // ✅ IMPORTANT CHANGE: use weighted system instead of plain shuffle
         questions = QuestionRepository
-            .getQuestionsByDifficulty(
+            .getWeightedQuestionsByDifficulty(
                 getApplication(),
-                difficulty
+                difficulty,
+                limit = 7
             )
-            .shuffled()          //random order
-            .take(7)             //limit to 7 questions
 
         currentQuestionIndex = 0
         score = 0
 
-        // reset UI state
         selectedAnswer = null
         answerSubmitted = false
         currentQuizPoints = 0
     }
 
     private fun getCorrectPoints(): Int {
-
         return when (selectedDifficulty) {
-
             "Easy" -> 10
-
             "Medium" -> 30
-
             "Hard" -> 50
-
             else -> 10
         }
     }
 
     private fun getWrongPenalty(): Int {
-
         return when (selectedDifficulty) {
-
             "Easy" -> 5
-
             "Medium" -> 15
-
             "Hard" -> 25
-
             else -> 5
         }
     }
 
+    // -------------------------
+    // ANSWER LOGIC
+    // -------------------------
     fun answerQuestion(answer: String) {
 
         if (answerSubmitted) return
@@ -154,35 +146,24 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
         val isCorrect = answer == currentQuestion.correctAnswer
 
         if (isCorrect) {
-
             score++
             totalCorrectAnswers++
 
             val earnedPoints = getCorrectPoints()
-
             totalPoints += earnedPoints
             currentQuizPoints += earnedPoints
 
         } else {
-
             val penalty = getWrongPenalty()
-
             totalPoints -= penalty
             currentQuizPoints -= penalty
 
-            // Prevent negative total points
-            if (totalPoints < 0) {
-                totalPoints = 0
-            }
-
-            if (currentQuizPoints < 0) {
-                currentQuizPoints = 0
-            }
+            if (totalPoints < 0) totalPoints = 0
+            if (currentQuizPoints < 0) currentQuizPoints = 0
         }
 
         totalQuestionsAnswered++
     }
-
 
     fun moveToNextQuestion(): Boolean {
 
@@ -198,24 +179,21 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
         return isLast
     }
 
-
     fun finalizeQuiz() {
 
         totalQuizzesPlayed++
-
         lastScore = score
         lastDifficultyPlayed = selectedDifficulty
 
         if (score > bestScore) {
             bestScore = score
         }
+
         saveStatistics()
     }
 
     private fun saveStatistics() {
-
         viewModelScope.launch {
-
             statsDataStore.saveStats(
                 totalPoints = totalPoints,
                 totalQuizzes = totalQuizzesPlayed,
@@ -228,16 +206,10 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
 
     fun resetQuiz() {
         setDifficulty(selectedDifficulty)
-        selectedAnswer = null
-        answerSubmitted = false
-        currentQuizPoints = 0
     }
 
-    fun getTotalQuestions(): Int {
-        return questions.size
-    }
+    fun getTotalQuestions(): Int = questions.size
 
-    fun isLastQuestion(): Boolean {
-        return currentQuestionIndex >= questions.lastIndex
-    }
+    fun isLastQuestion(): Boolean =
+        currentQuestionIndex >= questions.lastIndex
 }

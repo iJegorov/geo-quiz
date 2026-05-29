@@ -1,597 +1,692 @@
 [
   {
+    "id": 1,
     "difficulty": "Easy",
     "questionText": "What is the capital of France?",
     "options": ["Paris", "Berlin", "Madrid", "Rome"],
     "correctAnswer": "Paris"
   },
   {
+    "id": 2,
     "difficulty": "Easy",
     "questionText": "Which country has the maple leaf flag?",
     "options": ["USA", "Canada", "Australia", "UK"],
     "correctAnswer": "Canada"
   },
   {
+    "id": 3,
     "difficulty": "Easy",
     "questionText": "Which country is Tokyo the capital of?",
     "options": ["China", "Japan", "Thailand", "South Korea"],
     "correctAnswer": "Japan"
   },
   {
+    "id": 4,
     "difficulty": "Easy",
     "questionText": "What is the capital of the United States?",
     "options": ["New York", "Washington D.C.", "Los Angeles", "Chicago"],
     "correctAnswer": "Washington D.C."
   },
   {
+    "id": 5,
     "difficulty": "Easy",
     "questionText": "Which country is known for the Eiffel Tower?",
     "options": ["Italy", "France", "Spain", "Germany"],
     "correctAnswer": "France"
   },
   {
+    "id": 6,
     "difficulty": "Easy",
     "questionText": "What is the capital of Australia?",
     "options": ["Sydney", "Melbourne", "Canberra", "Perth"],
     "correctAnswer": "Canberra"
   },
   {
+    "id": 7,
     "difficulty": "Easy",
     "questionText": "Which continent is Egypt located in?",
     "options": ["Asia", "Africa", "Europe", "South America"],
     "correctAnswer": "Africa"
   },
   {
+    "id": 8,
     "difficulty": "Easy",
     "questionText": "What is the capital of Brazil?",
     "options": ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"],
     "correctAnswer": "Brasília"
   },
   {
+    "id": 9,
     "difficulty": "Easy",
     "questionText": "Which country has the most populous city in the world (Tokyo)?",
     "options": ["China", "India", "Japan", "Indonesia"],
     "correctAnswer": "Japan"
   },
   {
+    "id": 10,
     "difficulty": "Easy",
     "questionText": "What is the capital of Italy?",
     "options": ["Venice", "Rome", "Milan", "Florence"],
     "correctAnswer": "Rome"
   },
-
   {
+    "id": 11,
     "difficulty": "Medium",
     "questionText": "What is the capital of Argentina?",
     "options": ["Buenos Aires", "Lima", "Santiago", "Bogota"],
     "correctAnswer": "Buenos Aires"
   },
   {
+    "id": 12,
     "difficulty": "Medium",
     "questionText": "Which country has the city of Marrakech?",
     "options": ["Egypt", "Morocco", "Tunisia", "Turkey"],
     "correctAnswer": "Morocco"
   },
   {
+    "id": 13,
     "difficulty": "Medium",
     "questionText": "What is the largest country in Africa by area?",
     "options": ["Nigeria", "Algeria", "Sudan", "Egypt"],
     "correctAnswer": "Algeria"
   },
   {
+    "id": 14,
     "difficulty": "Medium",
     "questionText": "Which country is home to the Great Barrier Reef?",
     "options": ["Indonesia", "Australia", "Philippines", "Thailand"],
     "correctAnswer": "Australia"
   },
   {
+    "id": 15,
     "difficulty": "Medium",
     "questionText": "What is the capital of South Korea?",
     "options": ["Seoul", "Tokyo", "Beijing", "Pyongyang"],
     "correctAnswer": "Seoul"
   },
   {
+    "id": 16,
     "difficulty": "Medium",
     "questionText": "Which country has the city of Istanbul?",
     "options": ["Greece", "Turkey", "Bulgaria", "Syria"],
     "correctAnswer": "Turkey"
   },
   {
+    "id": 17,
     "difficulty": "Medium",
     "questionText": "What is the smallest continent by land area?",
     "options": ["Europe", "Australia", "Antarctica", "South America"],
     "correctAnswer": "Australia"
   },
   {
+    "id": 18,
     "difficulty": "Medium",
     "questionText": "Which country is known for the Taj Mahal?",
     "options": ["Pakistan", "India", "Bangladesh", "Nepal"],
     "correctAnswer": "India"
   },
   {
+    "id": 19,
     "difficulty": "Medium",
     "questionText": "What is the capital of Norway?",
     "options": ["Stockholm", "Helsinki", "Oslo", "Copenhagen"],
     "correctAnswer": "Oslo"
   },
   {
+    "id": 20,
     "difficulty": "Medium",
     "questionText": "Which river is the longest in the world?",
     "options": ["Amazon", "Nile", "Yangtze", "Mississippi"],
     "correctAnswer": "Nile"
   },
-
   {
+    "id": 21,
     "difficulty": "Hard",
     "questionText": "What is the capital of Kazakhstan?",
     "options": ["Astana", "Tashkent", "Bishkek", "Minsk"],
     "correctAnswer": "Astana"
   },
   {
+    "id": 22,
     "difficulty": "Hard",
     "questionText": "Which country owns the Faroe Islands?",
     "options": ["Norway", "Denmark", "Iceland", "Finland"],
     "correctAnswer": "Denmark"
   },
   {
+    "id": 23,
     "difficulty": "Hard",
     "questionText": "What is the smallest country in Africa?",
     "options": ["Seychelles", "Gambia", "Comoros", "Djibouti"],
     "correctAnswer": "Seychelles"
   },
   {
+    "id": 24,
     "difficulty": "Hard",
     "questionText": "What is the capital of Mongolia?",
     "options": ["Ulaanbaatar", "Kathmandu", "Bishkek", "Ashgabat"],
     "correctAnswer": "Ulaanbaatar"
   },
   {
+    "id": 25,
     "difficulty": "Hard",
     "questionText": "Which country controls Greenland?",
     "options": ["Canada", "Iceland", "Denmark", "Norway"],
     "correctAnswer": "Denmark"
   },
   {
+    "id": 26,
     "difficulty": "Hard",
     "questionText": "What is the capital of Bhutan?",
     "options": ["Thimphu", "Kathmandu", "Dhaka", "Colombo"],
     "correctAnswer": "Thimphu"
   },
   {
+    "id": 27,
     "difficulty": "Hard",
     "questionText": "Which country has the most official languages?",
     "options": ["India", "South Africa", "Bolivia", "Papua New Guinea"],
     "correctAnswer": "Papua New Guinea"
   },
   {
+    "id": 28,
     "difficulty": "Hard",
     "questionText": "What is the capital of Moldova?",
     "options": ["Chisinau", "Bucharest", "Sofia", "Kyiv"],
     "correctAnswer": "Chisinau"
   },
   {
+    "id": 29,
     "difficulty": "Hard",
     "questionText": "Which African country was formerly known as Abyssinia?",
     "options": ["Sudan", "Ethiopia", "Somalia", "Eritrea"],
     "correctAnswer": "Ethiopia"
   },
   {
+    "id": 30,
     "difficulty": "Hard",
     "questionText": "What is the largest landlocked country in the world?",
     "options": ["Mongolia", "Kazakhstan", "Bolivia", "Afghanistan"],
     "correctAnswer": "Kazakhstan"
   },
   {
+    "id": 31,
     "difficulty": "Hard",
     "questionText": "Which country has the city of Timbuktu?",
     "options": ["Niger", "Mali", "Mauritania", "Senegal"],
     "correctAnswer": "Mali"
   },
   {
+    "id": 32,
     "difficulty": "Hard",
     "questionText": "What is the capital of Tajikistan?",
     "options": ["Dushanbe", "Ashgabat", "Tashkent", "Baku"],
     "correctAnswer": "Dushanbe"
   },
   {
+    "id": 33,
     "difficulty": "Hard",
     "questionText": "Which country is Mount Kilimanjaro located in?",
     "options": ["Kenya", "Tanzania", "Uganda", "Rwanda"],
     "correctAnswer": "Tanzania"
   },
-
-
   {
+    "id": 34,
     "difficulty": "Easy",
     "questionText": "What is the capital of Spain?",
     "options": ["Barcelona", "Madrid", "Seville", "Valencia"],
     "correctAnswer": "Madrid"
   },
   {
+    "id": 35,
     "difficulty": "Easy",
     "questionText": "What is the capital of Germany?",
     "options": ["Munich", "Berlin", "Hamburg", "Frankfurt"],
     "correctAnswer": "Berlin"
   },
   {
+    "id": 36,
     "difficulty": "Easy",
     "questionText": "Which country is famous for the Pyramids of Giza?",
     "options": ["Sudan", "Egypt", "Morocco", "Libya"],
     "correctAnswer": "Egypt"
   },
   {
+    "id": 37,
     "difficulty": "Easy",
     "questionText": "What is the capital of China?",
     "options": ["Shanghai", "Beijing", "Hong Kong", "Guangzhou"],
     "correctAnswer": "Beijing"
   },
   {
+    "id": 38,
     "difficulty": "Easy",
     "questionText": "Which is the largest ocean on Earth?",
     "options": ["Atlantic", "Indian", "Arctic", "Pacific"],
     "correctAnswer": "Pacific"
   },
   {
+    "id": 39,
     "difficulty": "Easy",
     "questionText": "What is the capital of Mexico?",
     "options": ["Cancun", "Mexico City", "Guadalajara", "Monterrey"],
     "correctAnswer": "Mexico City"
   },
   {
+    "id": 40,
     "difficulty": "Medium",
     "questionText": "What is the capital of Peru?",
     "options": ["Lima", "Bogota", "Quito", "La Paz"],
     "correctAnswer": "Lima"
   },
   {
+    "id": 41,
     "difficulty": "Medium",
     "questionText": "Which country is known as the 'Land of the Midnight Sun'?",
     "options": ["Finland", "Norway", "Sweden", "Iceland"],
     "correctAnswer": "Norway"
   },
   {
+    "id": 42,
     "difficulty": "Medium",
     "questionText": "What is the capital of Ukraine?",
     "options": ["Minsk", "Kyiv", "Chisinau", "Bucharest"],
     "correctAnswer": "Kyiv"
   },
   {
+    "id": 43,
     "difficulty": "Medium",
     "questionText": "Which mountain is the tallest in the world?",
     "options": ["K2", "Kangchenjunga", "Mount Everest", "Lhotse"],
     "correctAnswer": "Mount Everest"
   },
   {
+    "id": 44,
     "difficulty": "Medium",
     "questionText": "Which country has the most volcanoes?",
     "options": ["Japan", "Indonesia", "Chile", "United States"],
     "correctAnswer": "Indonesia"
   },
   {
+    "id": 45,
     "difficulty": "Medium",
     "questionText": "What is the capital of Iceland?",
     "options": ["Oslo", "Helsinki", "Reykjavik", "Stockholm"],
     "correctAnswer": "Reykjavik"
   },
   {
+    "id": 46,
     "difficulty": "Medium",
     "questionText": "Which African country has the largest population?",
     "options": ["Egypt", "Nigeria", "Ethiopia", "Democratic Republic of Congo"],
     "correctAnswer": "Nigeria"
   },
   {
+    "id": 47,
     "difficulty": "Hard",
     "questionText": "What is the capital of Azerbaijan?",
     "options": ["Tbilisi", "Baku", "Yerevan", "Ashgabat"],
     "correctAnswer": "Baku"
   },
   {
+    "id": 48,
     "difficulty": "Hard",
     "questionText": "Which country owns the Canary Islands?",
     "options": ["Portugal", "Spain", "Morocco", "France"],
     "correctAnswer": "Spain"
   },
   {
+    "id": 49,
     "difficulty": "Hard",
     "questionText": "What is the smallest country in the world?",
     "options": ["Monaco", "Vatican City", "San Marino", "Liechtenstein"],
     "correctAnswer": "Vatican City"
   },
   {
+    "id": 50,
     "difficulty": "Hard",
     "questionText": "Which country borders the most other countries?",
     "options": ["Russia", "China", "Brazil", "India"],
     "correctAnswer": "China"
   },
   {
+    "id": 51,
     "difficulty": "Hard",
     "questionText": "What is the capital of Sri Lanka?",
     "options": ["Colombo", "Kandy", "Galle", "Jaffna"],
     "correctAnswer": "Colombo"
   },
   {
+    "id": 52,
     "difficulty": "Hard",
     "questionText": "Which river flows through the Grand Canyon?",
     "options": ["Mississippi", "Colorado", "Missouri", "Rio Grande"],
     "correctAnswer": "Colorado"
   },
   {
+    "id": 53,
     "difficulty": "Hard",
     "questionText": "What is the largest desert in the world?",
     "options": ["Gobi", "Kalahari", "Sahara", "Arabian"],
     "correctAnswer": "Sahara"
   },
   {
+    "id": 54,
     "difficulty": "Hard",
     "questionText": "Which country was formerly called Ceylon?",
     "options": ["Myanmar", "Sri Lanka", "Cambodia", "Laos"],
     "correctAnswer": "Sri Lanka"
   },
   {
+    "id": 55,
     "difficulty": "Hard",
     "questionText": "What is the capital of Armenia?",
     "options": ["Baku", "Tbilisi", "Yerevan", "Ankara"],
     "correctAnswer": "Yerevan"
   },
   {
+    "id": 56,
     "difficulty": "Easy",
     "questionText": "What is the capital of Spain?",
     "options": ["Barcelona", "Madrid", "Seville", "Valencia"],
     "correctAnswer": "Madrid"
   },
   {
+    "id": 57,
     "difficulty": "Easy",
     "questionText": "What is the capital of Germany?",
     "options": ["Munich", "Berlin", "Hamburg", "Frankfurt"],
     "correctAnswer": "Berlin"
   },
   {
+    "id": 58,
     "difficulty": "Easy",
     "questionText": "Which country is famous for the Pyramids of Giza?",
     "options": ["Sudan", "Egypt", "Morocco", "Libya"],
     "correctAnswer": "Egypt"
   },
   {
+    "id": 59,
     "difficulty": "Easy",
     "questionText": "What is the capital of China?",
     "options": ["Shanghai", "Beijing", "Hong Kong", "Guangzhou"],
     "correctAnswer": "Beijing"
   },
   {
+    "id": 60,
     "difficulty": "Easy",
     "questionText": "Which is the largest ocean on Earth?",
     "options": ["Atlantic", "Indian", "Arctic", "Pacific"],
     "correctAnswer": "Pacific"
   },
   {
+    "id": 61,
     "difficulty": "Easy",
     "questionText": "What is the capital of Mexico?",
     "options": ["Cancun", "Mexico City", "Guadalajara", "Monterrey"],
     "correctAnswer": "Mexico City"
   },
   {
+    "id": 62,
     "difficulty": "Medium",
     "questionText": "What is the capital of Peru?",
     "options": ["Lima", "Bogota", "Quito", "La Paz"],
     "correctAnswer": "Lima"
   },
   {
+    "id": 63,
     "difficulty": "Medium",
     "questionText": "Which country is known as the 'Land of the Midnight Sun'?",
     "options": ["Finland", "Norway", "Sweden", "Iceland"],
     "correctAnswer": "Norway"
   },
   {
+    "id": 64,
     "difficulty": "Medium",
     "questionText": "What is the capital of Ukraine?",
     "options": ["Minsk", "Kyiv", "Chisinau", "Bucharest"],
     "correctAnswer": "Kyiv"
   },
   {
+    "id": 65,
     "difficulty": "Medium",
     "questionText": "Which mountain is the tallest in the world?",
     "options": ["K2", "Kangchenjunga", "Mount Everest", "Lhotse"],
     "correctAnswer": "Mount Everest"
   },
   {
+    "id": 66,
     "difficulty": "Medium",
     "questionText": "Which country has the most volcanoes?",
     "options": ["Japan", "Indonesia", "Chile", "United States"],
     "correctAnswer": "Indonesia"
   },
   {
+    "id": 67,
     "difficulty": "Medium",
     "questionText": "What is the capital of Iceland?",
     "options": ["Oslo", "Helsinki", "Reykjavik", "Stockholm"],
     "correctAnswer": "Reykjavik"
   },
   {
+    "id": 68,
     "difficulty": "Medium",
     "questionText": "Which African country has the largest population?",
     "options": ["Egypt", "Nigeria", "Ethiopia", "Democratic Republic of Congo"],
     "correctAnswer": "Nigeria"
   },
   {
+    "id": 69,
     "difficulty": "Hard",
     "questionText": "What is the capital of Azerbaijan?",
     "options": ["Tbilisi", "Baku", "Yerevan", "Ashgabat"],
     "correctAnswer": "Baku"
   },
   {
+    "id": 70,
     "difficulty": "Hard",
     "questionText": "Which country owns the Canary Islands?",
     "options": ["Portugal", "Spain", "Morocco", "France"],
     "correctAnswer": "Spain"
   },
   {
+    "id": 71,
     "difficulty": "Hard",
     "questionText": "What is the smallest country in the world?",
     "options": ["Monaco", "Vatican City", "San Marino", "Liechtenstein"],
     "correctAnswer": "Vatican City"
   },
   {
+    "id": 72,
     "difficulty": "Hard",
     "questionText": "Which country borders the most other countries?",
     "options": ["Russia", "China", "Brazil", "India"],
     "correctAnswer": "China"
   },
   {
+    "id": 73,
     "difficulty": "Hard",
     "questionText": "What is the capital of Sri Lanka?",
     "options": ["Colombo", "Kandy", "Galle", "Jaffna"],
     "correctAnswer": "Colombo"
   },
   {
+    "id": 74,
     "difficulty": "Hard",
     "questionText": "Which river flows through the Grand Canyon?",
     "options": ["Mississippi", "Colorado", "Missouri", "Rio Grande"],
     "correctAnswer": "Colorado"
   },
   {
+    "id": 75,
     "difficulty": "Hard",
     "questionText": "What is the largest desert in the world?",
     "options": ["Gobi", "Kalahari", "Sahara", "Arabian"],
     "correctAnswer": "Sahara"
   },
   {
+    "id": 76,
     "difficulty": "Hard",
     "questionText": "Which country was formerly called Ceylon?",
     "options": ["Myanmar", "Sri Lanka", "Cambodia", "Laos"],
     "correctAnswer": "Sri Lanka"
   },
   {
+    "id": 77,
     "difficulty": "Hard",
     "questionText": "What is the capital of Armenia?",
     "options": ["Baku", "Tbilisi", "Yerevan", "Ankara"],
     "correctAnswer": "Yerevan"
   },
   {
+    "id": 78,
     "difficulty": "Easy",
     "questionText": "What is the capital of Canada?",
     "options": ["Toronto", "Ottawa", "Vancouver", "Montreal"],
     "correctAnswer": "Ottawa"
   },
   {
+    "id": 79,
     "difficulty": "Easy",
     "questionText": "What is the capital of Russia?",
     "options": ["Moscow", "Saint Petersburg", "Kiev", "Novosibirsk"],
     "correctAnswer": "Moscow"
   },
   {
+    "id": 80,
     "difficulty": "Easy",
     "questionText": "Which country is famous for kangaroos?",
     "options": ["New Zealand", "Australia", "South Africa", "Brazil"],
     "correctAnswer": "Australia"
   },
   {
+    "id": 81,
     "difficulty": "Easy",
     "questionText": "On which continent is the Amazon Rainforest located?",
     "options": ["Africa", "Asia", "South America", "North America"],
     "correctAnswer": "South America"
   },
   {
+    "id": 82,
     "difficulty": "Easy",
     "questionText": "What is the capital of India?",
     "options": ["Mumbai", "Delhi", "Bangalore", "Kolkata"],
     "correctAnswer": "Delhi"
   },
   {
+    "id": 83,
     "difficulty": "Easy",
     "questionText": "Which country has the Statue of Liberty?",
     "options": ["France", "United States", "Canada", "United Kingdom"],
     "correctAnswer": "United States"
   },
   {
+    "id": 84,
     "difficulty": "Medium",
     "questionText": "What is the capital of Chile?",
     "options": ["Lima", "Santiago", "Buenos Aires", "Bogota"],
     "correctAnswer": "Santiago"
   },
   {
+    "id": 85,
     "difficulty": "Medium",
     "questionText": "Which country is home to Machu Picchu?",
     "options": ["Bolivia", "Peru", "Ecuador", "Colombia"],
     "correctAnswer": "Peru"
   },
   {
+    "id": 86,
     "difficulty": "Medium",
     "questionText": "What is the longest river in Europe?",
     "options": ["Danube", "Rhine", "Volga", "Seine"],
     "correctAnswer": "Volga"
   },
   {
+    "id": 87,
     "difficulty": "Medium",
     "questionText": "Which country has the highest capital city in the world?",
     "options": ["Bolivia", "Ecuador", "Nepal", "Peru"],
     "correctAnswer": "Bolivia"
   },
   {
+    "id": 88,
     "difficulty": "Medium",
     "questionText": "What is the capital of Sweden?",
     "options": ["Oslo", "Copenhagen", "Helsinki", "Stockholm"],
     "correctAnswer": "Stockholm"
   },
   {
+    "id": 89,
     "difficulty": "Medium",
     "questionText": "Which sea is the largest in the world?",
     "options": ["Mediterranean Sea", "Caribbean Sea", "South China Sea", "Coral Sea"],
     "correctAnswer": "South China Sea"
   },
   {
+    "id": 90,
     "difficulty": "Medium",
     "questionText": "Which country is known as the 'Land of a Thousand Lakes'?",
     "options": ["Sweden", "Finland", "Canada", "Russia"],
     "correctAnswer": "Finland"
   },
   {
+    "id": 91,
     "difficulty": "Hard",
     "questionText": "What is the capital of Turkmenistan?",
     "options": ["Ashgabat", "Tashkent", "Dushanbe", "Bishkek"],
     "correctAnswer": "Ashgabat"
   },
   {
+    "id": 92,
     "difficulty": "Hard",
     "questionText": "Which country owns Easter Island?",
     "options": ["Peru", "Chile", "Argentina", "Ecuador"],
     "correctAnswer": "Chile"
   },
   {
+    "id": 93,
     "difficulty": "Hard",
     "questionText": "What is the deepest lake in the world?",
     "options": ["Lake Victoria", "Lake Baikal", "Lake Tanganyika", "Caspian Sea"],
     "correctAnswer": "Lake Baikal"
   },
   {
+    "id": 94,
     "difficulty": "Hard",
     "questionText": "Which country has territory in both Europe and Asia?",
     "options": ["Russia", "Turkey", "Kazakhstan", "All of the above"],
     "correctAnswer": "All of the above"
   },
   {
+    "id": 95,
     "difficulty": "Hard",
     "questionText": "What is the capital of Madagascar?",
     "options": ["Nairobi", "Antananarivo", "Maputo", "Harare"],
     "correctAnswer": "Antananarivo"
   },
   {
+    "id": 96,
     "difficulty": "Hard",
     "questionText": "Which country has the most time zones?",
     "options": ["Russia", "United States", "France", "China"],
     "correctAnswer": "France"
   },
   {
+    "id": 97,
     "difficulty": "Hard",
     "questionText": "What is the capital of Albania?",
     "options": ["Tirana", "Skopje", "Sofia", "Podgorica"],
     "correctAnswer": "Tirana"
   },
   {
+    "id": 98,
     "difficulty": "Hard",
     "questionText": "Which desert is located in China and Mongolia?",
     "options": ["Gobi Desert", "Thar Desert", "Karakum Desert", "Atacama Desert"],
     "correctAnswer": "Gobi Desert"
   },
   {
+    "id": 99,
     "difficulty": "Hard",
     "questionText": "What is the smallest country in South America?",
     "options": ["Uruguay", "Suriname", "Guyana", "Ecuador"],

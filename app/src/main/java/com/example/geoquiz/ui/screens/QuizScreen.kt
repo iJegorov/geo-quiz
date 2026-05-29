@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.compose.material3.contentColorFor
 import com.example.geoquiz.viewmodel.QuizViewModel
 
 @Composable
@@ -23,155 +24,115 @@ fun QuizScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(20.dp)
     ) {
 
-        // 🎮 Player progression info
+        // TOP INFO
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-
-            Column(
-                horizontalAlignment = Alignment.End
-            ) {
-
-                Text(
-                    text = viewModel.currentLevel,
-                    style = MaterialTheme.typography.titleMedium
-                )
-
-                Text(
-                    text = "${viewModel.totalPoints} pts",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
+            Text("Level: ${viewModel.currentLevel}")
+            Text("Points: ${viewModel.totalPoints}")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // ❓ Question text
-        Text(
-            text = question.questionText,
-            style = MaterialTheme.typography.headlineSmall
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // 📊 Quiz statistics
-        Text(
-            text = "Correct answers: ${viewModel.score}"
-        )
-
-        Text(
-            text = "Quiz points: ${viewModel.currentQuizPoints}"
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // 📍 Progress indicator
-        Text(
-            text = "Question ${viewModel.currentQuestionIndex + 1} / ${viewModel.getTotalQuestions()}",
-            style = MaterialTheme.typography.bodyLarge,
+        // PROGRESS
+        LinearProgressIndicator(
+            progress = { (viewModel.currentQuestionIndex + 1f) / viewModel.getTotalQuestions() },
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = "Question ${viewModel.currentQuestionIndex + 1} / ${viewModel.getTotalQuestions()}",
+            style = MaterialTheme.typography.bodyMedium
+        )
 
-        // 🔘 Answer buttons
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // QUESTION CARD
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(8.dp)
+        ) {
+            Text(
+                text = question.questionText,
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier.padding(20.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // OPTIONS
         question.options.forEach { option ->
 
-            val isCorrectAnswer = option == question.correctAnswer
+            val isCorrect = option == question.correctAnswer
             val isSelected = option == viewModel.selectedAnswer
 
+            val containerColor = when {
+                viewModel.answerSubmitted && isCorrect ->
+                    MaterialTheme.colorScheme.primary
+
+                viewModel.answerSubmitted && isSelected ->
+                    MaterialTheme.colorScheme.error
+
+                else ->
+                    MaterialTheme.colorScheme.secondaryContainer
+            }
+
+            val contentColor = contentColorFor(containerColor)
+
             Button(
-                onClick = {
-                    viewModel.answerQuestion(option)
-                },
-
+                onClick = { viewModel.answerQuestion(option) },
                 enabled = !viewModel.answerSubmitted,
-
-                colors = ButtonDefaults.buttonColors(
-
-                    containerColor = when {
-
-                        // ✅ Correct answer
-                        viewModel.answerSubmitted && isCorrectAnswer ->
-                            MaterialTheme.colorScheme.primary
-
-                        // ❌ Wrong selected answer
-                        viewModel.answerSubmitted && isSelected ->
-                            MaterialTheme.colorScheme.error
-
-                        else ->
-                            MaterialTheme.colorScheme.secondary
-                    }
-                ),
-
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 4.dp)
+                    .padding(vertical = 6.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = containerColor,
+                    contentColor = contentColor
+                )
             ) {
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     Text(option)
 
                     if (viewModel.answerSubmitted) {
-
-                        when {
-
-                            // ✅ Correct answer
-                            option == question.correctAnswer -> {
-
-                                Icon(
-                                    imageVector = Icons.Default.Check,
-                                    contentDescription = "Correct Answer"
-                                )
-                            }
-
-                            // ❌ Wrong selected answer
-                            option == viewModel.selectedAnswer -> {
-
-                                Icon(
-                                    imageVector = Icons.Default.Close,
-                                    contentDescription = "Wrong Answer"
-                                )
-                            }
-                        }
+                        Icon(
+                            imageVector = if (isCorrect)
+                                Icons.Default.Check
+                            else
+                                Icons.Default.Close,
+                            contentDescription = null
+                        )
                     }
                 }
             }
         }
 
-        // ➡ Continue button
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // NEXT BUTTON
         if (viewModel.answerSubmitted) {
-
-            Spacer(modifier = Modifier.height(24.dp))
-
             Button(
                 onClick = {
+                    val finished = viewModel.moveToNextQuestion()
 
-                    val isFinished = viewModel.moveToNextQuestion()
-
-                    if (isFinished) {
-
+                    if (finished) {
                         viewModel.finalizeQuiz()
-
                         navController.navigate("result") {
                             popUpTo("quiz") { inclusive = true }
                         }
                     }
                 },
-
                 modifier = Modifier.fillMaxWidth()
             ) {
-
-                Text("Continue")
+                Text("Next")
             }
         }
     }
