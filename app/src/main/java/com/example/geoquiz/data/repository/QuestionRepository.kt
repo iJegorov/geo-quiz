@@ -2,21 +2,22 @@ package com.example.geoquiz.data.repository
 
 import android.content.Context
 import com.example.geoquiz.data.model.Question
+import com.example.geoquiz.data.quiz.QuizEngine
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.InputStreamReader
 
-object QuestionRepository {
+class QuestionRepository(
+    private val context: Context
+) : QuizEngine {
 
     private var cachedQuestions: List<Question>? = null
-
-    // Adaptive weights (runtime only for now)
     private val questionWeightMap = mutableMapOf<Int, Int>()
 
-    // --------------------------
-    // LOAD QUESTIONS
-    // --------------------------
-    private fun loadQuestions(context: Context): List<Question> {
+    // -------------------------
+    // LOAD ONCE
+    // -------------------------
+    private fun loadQuestions(): List<Question> {
 
         if (cachedQuestions != null) return cachedQuestions!!
 
@@ -28,7 +29,6 @@ object QuestionRepository {
 
         reader.close()
 
-        // initialize weights
         cachedQuestions!!.forEach { q ->
             questionWeightMap[q.id] = 1
         }
@@ -36,45 +36,14 @@ object QuestionRepository {
         return cachedQuestions!!
     }
 
-    // --------------------------
-    // FILTER BY DIFFICULTY
-    // --------------------------
-    fun getQuestionsByDifficulty(
-        context: Context,
-        difficulty: String
-    ): List<Question> {
+    // -------------------------
+    // ENGINE IMPLEMENTATION
+    // -------------------------
+    override fun getQuestions(difficulty: String, limit: Int): List<Question> {
 
-        return loadQuestions(context).filter {
-            it.difficulty == difficulty
+        val base = loadQuestions().filter {
+            it.difficulty.equals(difficulty, ignoreCase = true)
         }
-    }
-
-    // --------------------------
-    // UPDATE PERFORMANCE (adaptive learning)
-    // --------------------------
-    fun updateQuestionPerformance(question: Question, correct: Boolean) {
-
-        val current = questionWeightMap[question.id] ?: 1
-
-        questionWeightMap[question.id] = if (correct) {
-            // improve mastery → reduce appearance
-            (current - 1).coerceAtLeast(1)
-        } else {
-            // reinforce weakness → increase appearance
-            (current + 2).coerceAtMost(10)
-        }
-    }
-
-    // --------------------------
-    // WEIGHTED SELECTION (MAIN FEATURE)
-    // --------------------------
-    fun getWeightedQuestionsByDifficulty(
-        context: Context,
-        difficulty: String,
-        limit: Int = 7
-    ): List<Question> {
-
-        val base = getQuestionsByDifficulty(context, difficulty)
 
         val weightedPool = base.flatMap { q ->
             val weight = questionWeightMap[q.id] ?: 1
@@ -82,5 +51,26 @@ object QuestionRepository {
         }
 
         return weightedPool.shuffled().take(limit)
+    }
+
+    // -------------------------
+    // ADAPTIVE LEARNING
+    // -------------------------
+    fun updateQuestionPerformance(question: Question, correct: Boolean) {
+
+        val current = questionWeightMap[question.id] ?: 1
+
+        questionWeightMap[question.id] = if (correct) {
+            (current - 1).coerceAtLeast(1)
+        } else {
+            (current + 2).coerceAtMost(10)
+        }
+    }
+
+    // -------------------------
+    // TEST SUPPORT ONLY
+    // -------------------------
+    fun getQuestionWeight(questionId: Int): Int {
+        return questionWeightMap[questionId] ?: 1
     }
 }

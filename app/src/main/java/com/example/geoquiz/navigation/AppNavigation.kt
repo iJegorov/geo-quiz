@@ -1,19 +1,31 @@
 package com.example.geoquiz.navigation
 
-import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
+import android.app.Application
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.*
+import com.example.geoquiz.data.repository.QuestionRepository
 import com.example.geoquiz.ui.screens.*
 import com.example.geoquiz.viewmodel.QuizViewModel
-import com.example.geoquiz.ui.screens.StatisticsScreen
 
 @Composable
 fun AppNavigation() {
 
     val navController = rememberNavController()
+    val context = LocalContext.current
 
-    // SINGLE shared ViewModel for entire app
-    val quizViewModel: QuizViewModel = viewModel()
+    // ✅ FIX 1: create REAL instance
+    val quizEngine = remember {
+        QuestionRepository(context)
+    }
+
+    // ✅ FIX 2: pass correct dependency
+    val quizViewModel = remember {
+        QuizViewModel(
+            application = context.applicationContext as Application,
+            quizEngine = quizEngine
+        )
+    }
 
     NavHost(
         navController = navController,
@@ -21,31 +33,19 @@ fun AppNavigation() {
     ) {
 
         composable("home") {
-            HomeScreen(
-                navController = navController,
-                viewModel = quizViewModel
-            )
+            HomeScreen(navController, quizViewModel)
         }
 
         composable("quiz") {
-            QuizScreen(
-                navController = navController,
-                viewModel = quizViewModel
-            )
+            QuizScreen(navController, quizViewModel)
         }
 
         composable("result") {
-            ResultScreen(
-                navController = navController,
-                viewModel = quizViewModel
-            )
+            ResultScreen(navController, quizViewModel)
         }
 
         composable("statistics") {
-            StatisticsScreen(
-                navController = navController,
-                viewModel = quizViewModel
-            )
+            StatisticsScreen(navController, quizViewModel)
         }
     }
 }
