@@ -11,10 +11,15 @@ import com.example.geoquiz.domain.LevelCalculator
 import com.example.geoquiz.domain.ScoreCalculator
 import kotlinx.coroutines.launch
 
+
+
+
 class QuizViewModel(
     application: Application,
     private val quizEngine: QuizEngine
 ) : AndroidViewModel(application) {
+
+
 
     private val statsDataStore = StatsDataStore(application)
 
@@ -39,6 +44,7 @@ class QuizViewModel(
                 correctAnswer = "N/A"
             )
 
+
     // -------------------------
     // STATS
     // -------------------------
@@ -60,6 +66,7 @@ class QuizViewModel(
     var lastDifficultyPlayed by mutableStateOf("Easy")
         private set
 
+
     // -------------------------
     // UI STATE
     // -------------------------
@@ -78,6 +85,7 @@ class QuizViewModel(
     val currentLevel: String
         get() = LevelCalculator.getLevel(totalPoints)
 
+
     init {
         setDifficulty("Easy")
 
@@ -91,6 +99,7 @@ class QuizViewModel(
             totalQuestionsAnswered = saved.totalAnswered
         }
     }
+
 
     // -------------------------
     // QUESTIONS
@@ -109,6 +118,7 @@ class QuizViewModel(
         currentQuizPoints = 0
     }
 
+
     // -------------------------
     // ANSWER LOGIC
     // -------------------------
@@ -120,6 +130,11 @@ class QuizViewModel(
         answerSubmitted = true
 
         val isCorrect = answer == currentQuestion.correctAnswer
+
+        quizEngine.updateQuestionPerformance(
+            currentQuestion,
+            isCorrect
+        )
 
         if (isCorrect) {
 
@@ -145,6 +160,7 @@ class QuizViewModel(
         totalQuestionsAnswered++
     }
 
+
     fun moveToNextQuestion(): Boolean {
 
         val isLast = currentQuestionIndex == questions.lastIndex
@@ -157,6 +173,7 @@ class QuizViewModel(
         return isLast
     }
 
+
     fun finalizeQuiz() {
 
         totalQuizzesPlayed++
@@ -167,6 +184,7 @@ class QuizViewModel(
 
         saveStats()
     }
+
 
     private fun saveStats() {
         viewModelScope.launch {
@@ -180,11 +198,14 @@ class QuizViewModel(
         }
     }
 
+
     fun resetQuiz() {
         setDifficulty(selectedDifficulty)
     }
 
+
     fun getTotalQuestions(): Int = questions.size
+
 
     fun isLastQuestion(): Boolean =
         currentQuestionIndex >= questions.lastIndex

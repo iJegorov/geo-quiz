@@ -14,10 +14,22 @@ class FakeQuizEngine : QuizEngine {
 
     var questions: List<Question> = emptyList()
 
-    override fun getQuestions(difficulty: String, limit: Int): List<Question> {
+    val performanceUpdates = mutableListOf<Pair<Question, Boolean>>()
+
+    override fun getQuestions(
+        difficulty: String,
+        limit: Int
+    ): List<Question> {
         return questions
             .filter { it.difficulty == difficulty }
             .take(limit)
+    }
+
+    override fun updateQuestionPerformance(
+        question: Question,
+        correct: Boolean
+    ) {
+        performanceUpdates.add(question to correct)
     }
 }
 
@@ -72,7 +84,11 @@ class QuizViewModelTest {
     fun questions_are_loaded_from_engine() {
 
         assertEquals(2, viewModel.getTotalQuestions())
-        assertEquals("Capital of France?", viewModel.currentQuestion.questionText)
+
+        assertEquals(
+            "Capital of France?",
+            viewModel.currentQuestion.questionText
+        )
     }
 
     @Test
@@ -129,5 +145,31 @@ class QuizViewModelTest {
         viewModel.moveToNextQuestion()
 
         assertTrue(viewModel.isLastQuestion())
+    }
+
+    @Test
+    fun correct_answer_updates_question_performance() {
+
+        viewModel.answerQuestion("Paris")
+
+        assertEquals(1, fakeEngine.performanceUpdates.size)
+
+        val update = fakeEngine.performanceUpdates.first()
+
+        assertEquals(1, update.first.id)
+        assertTrue(update.second)
+    }
+
+    @Test
+    fun wrong_answer_updates_question_performance() {
+
+        viewModel.answerQuestion("Berlin")
+
+        assertEquals(1, fakeEngine.performanceUpdates.size)
+
+        val update = fakeEngine.performanceUpdates.first()
+
+        assertEquals(1, update.first.id)
+        assertFalse(update.second)
     }
 }

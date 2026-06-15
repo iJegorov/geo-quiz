@@ -39,25 +39,47 @@ class QuestionRepository(
     // -------------------------
     // ENGINE IMPLEMENTATION
     // -------------------------
-    override fun getQuestions(difficulty: String, limit: Int): List<Question> {
+    override fun getQuestions(
+        difficulty: String,
+        limit: Int
+    ): List<Question> {
 
         val base = loadQuestions().filter {
             it.difficulty.equals(difficulty, ignoreCase = true)
         }
 
+        // Weighted pool (still used for probability bias)
         val weightedPool = base.flatMap { q ->
             val weight = questionWeightMap[q.id] ?: 1
             List(weight) { q }
         }
 
-        return weightedPool.shuffled().take(limit)
+        val result = mutableListOf<Question>()
+        val usedIds = mutableSetOf<Int>()
+
+        // Keep picking until we have UNIQUE questions
+        val shuffled = weightedPool.shuffled()
+
+        for (q in shuffled) {
+
+            if (q.id !in usedIds) {
+                result.add(q)
+                usedIds.add(q.id)
+            }
+
+            if (result.size == limit) break
+        }
+
+        return result
     }
 
     // -------------------------
     // ADAPTIVE LEARNING
     // -------------------------
-    fun updateQuestionPerformance(question: Question, correct: Boolean) {
-
+    override fun updateQuestionPerformance(
+        question: Question,
+        correct: Boolean
+    ){
         val current = questionWeightMap[question.id] ?: 1
 
         questionWeightMap[question.id] = if (correct) {

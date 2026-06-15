@@ -8,10 +8,24 @@ class FakeEngine : QuizEngine {
 
     var questions: List<Question> = emptyList()
 
-    override fun getQuestions(difficulty: String, limit: Int): List<Question> {
+    // Used for adaptive-learning tests
+    val performanceUpdates = mutableListOf<Pair<Question, Boolean>>()
+
+    override fun getQuestions(
+        difficulty: String,
+        limit: Int
+    ): List<Question> {
+
         return questions
             .filter { it.difficulty == difficulty }
             .take(limit)
+    }
+
+    override fun updateQuestionPerformance(
+        question: Question,
+        correct: Boolean
+    ) {
+        performanceUpdates.add(question to correct)
     }
 }
 
@@ -20,9 +34,9 @@ class QuizEngineBehaviorTest {
     private val engine = FakeEngine()
 
     private val sampleData = listOf(
-        Question(1, "Easy", "Q1", listOf("A","B"), "A"),
-        Question(2, "Easy", "Q2", listOf("A","B"), "A"),
-        Question(3, "Hard", "Q3", listOf("A","B"), "A")
+        Question(1, "Easy", "Q1", listOf("A", "B"), "A"),
+        Question(2, "Easy", "Q2", listOf("A", "B"), "A"),
+        Question(3, "Hard", "Q3", listOf("A", "B"), "A")
     )
 
     @Test
@@ -54,5 +68,27 @@ class QuizEngineBehaviorTest {
         val result = engine.getQuestions("Extreme", 5)
 
         assertTrue(result.isEmpty())
+    }
+
+    @Test
+    fun records_performance_updates() {
+
+        val question = sampleData.first()
+
+        engine.updateQuestionPerformance(
+            question = question,
+            correct = false
+        )
+
+        assertEquals(1, engine.performanceUpdates.size)
+
+        assertEquals(
+            question,
+            engine.performanceUpdates.first().first
+        )
+
+        assertFalse(
+            engine.performanceUpdates.first().second
+        )
     }
 }
