@@ -7,16 +7,26 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.InputStreamReader
 
-class QuestionRepository(
-    private val context: Context
-) : QuizEngine {
+/**
+ * QuestionRepository
+ *
+ * Data source for quiz questions with adaptive learning support.
+ *
+ * Features:
+ * - Loads questions from JSON file
+ * - Provides weighted question selection (adaptive repetition)
+ * - Ensures uniqeu questions per quiz session
+ * - Updates question difficulty based on user performance
+ */
+class QuestionRepository(private val context: Context) : QuizEngine {
 
     private var cachedQuestions: List<Question>? = null
     private val questionWeightMap = mutableMapOf<Int, Int>()
 
-    // -------------------------
-    // LOAD ONCE
-    // -------------------------
+
+    // ---------------------------------------------------------
+    // LOAD QUESTIONS (SINGLE SOURCE OF TRUTH)
+    // ---------------------------------------------------------
     private fun loadQuestions(): List<Question> {
 
         if (cachedQuestions != null) return cachedQuestions!!
@@ -29,6 +39,7 @@ class QuestionRepository(
 
         reader.close()
 
+        // initialize weights
         cachedQuestions!!.forEach { q ->
             questionWeightMap[q.id] = 1
         }
@@ -36,9 +47,10 @@ class QuestionRepository(
         return cachedQuestions!!
     }
 
-    // -------------------------
-    // ENGINE IMPLEMENTATION
-    // -------------------------
+
+    // ---------------------------------------------------------
+    // QUIZ ENGINE (UNIQUE + WEIGHTED SELECTION)
+    // ---------------------------------------------------------
     override fun getQuestions(
         difficulty: String,
         limit: Int
@@ -48,50 +60,49 @@ class QuestionRepository(
             it.difficulty.equals(difficulty, ignoreCase = true)
         }
 
-        // Weighted pool (still used for probability bias)
-        val weightedPool = base.flatMap { q ->
-            val weight = questionWeightMap[q.id] ?: 1
-            List(weight) { q }
-        }
-
+        // pool of available questions (no duplicates in final result)
+        val available = base.toMutableList()
         val result = mutableListOf<Question>()
-        val usedIds = mutableSetOf<Int>()
 
-        // Keep picking until we have UNIQUE questions
-        val shuffled = weightedPool.shuffled()
+        repeat(limit.coerceAtMost(base.size)) {
 
-        for (q in shuffled) {
-
-            if (q.id !in usedIds) {
-                result.add(q)
-                usedIds.add(q.id)
+            val weightedPool = available.flatMap { q ->
+                val weight = questionWeightMap[q.id] ?: 1
+                List(weight) { q }
             }
 
-            if (result.size == limit) break
+            val selected = weightedPool.random()
+
+            result.add(selected)
+            available.removeAll { it.id == selected.id }
         }
 
         return result
     }
 
-    // -------------------------
-    // ADAPTIVE LEARNING
-    // -------------------------
+
+    // ---------------------------------------------------------
+    // ADAPTIVE LEARNING SYSTEM
+    // ---------------------------------------------------------
     override fun updateQuestionPerformance(
         question: Question,
         correct: Boolean
-    ){
+    ) {
         val current = questionWeightMap[question.id] ?: 1
 
         questionWeightMap[question.id] = if (correct) {
+            // correct → reduce frequency (fade out)
             (current - 1).coerceAtLeast(1)
         } else {
+            // wrong → increase repetition
             (current + 2).coerceAtMost(10)
         }
     }
 
-    // -------------------------
-    // TEST SUPPORT ONLY
-    // -------------------------
+
+    // ---------------------------------------------------------
+    // TESTING SUPPORT
+    // ---------------------------------------------------------
     fun getQuestionWeight(questionId: Int): Int {
         return questionWeightMap[questionId] ?: 1
     }

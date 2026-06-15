@@ -8,15 +8,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.geoquiz.viewmodel.QuizViewModel
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 
+
+
+/**
+ * Statistics screen showing user progress and performance summary.
+ *
+ * Displays:
+ * - Total quizzes played
+ * - Correct answers and accuracy
+ * - Player level and accumulated points
+ *
+ * Uses data from QuizViewMode and provides navigation back to home screen.
+ */
 @Composable
-fun StatisticsScreen(
-    navController: NavController,
-    viewModel: QuizViewModel
-) {
+fun StatisticsScreen(navController: NavController, viewModel: QuizViewModel) {
 
     Column(
         modifier = Modifier
@@ -68,6 +75,7 @@ fun StatisticsScreen(
         }
     }
 }
+
 
 @Composable
 fun StatCard(title: String, stats: List<Pair<String, String>>) {

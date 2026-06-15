@@ -8,24 +8,63 @@ import com.example.geoquiz.data.repository.QuestionRepository
 import com.example.geoquiz.ui.screens.*
 import com.example.geoquiz.viewmodel.QuizViewModel
 
+/**
+ * AppNavigation
+ *
+ * Central navigation graph for the GeoQuiz application.
+ *
+ * Responsibilities:
+ * - Defines all app screens and routes
+ * - Creates and provides shared ViewModel instance
+ * - Injects dependencies manually
+ *
+ * Architecture role:
+ * - Acts as the "composition root" of the app
+ * - Ensures a single QuizViewModel instance is shared across screens
+ */
 @Composable
 fun AppNavigation() {
 
+    // ---------------------------------------------------------
+    // NAVIGATION CONTROLLER
+    // ---------------------------------------------------------
     val navController = rememberNavController()
+    // Context is required for repository and ViewModel creation
     val context = LocalContext.current
 
-    // ✅ FIX 1: create REAL instance
+    // ---------------------------------------------------------
+    // DEPENDENCY INJECTION (manual DI)
+    // ---------------------------------------------------------
+    /**
+     * QuizEngine implementation (QuestionRepository)
+     *
+     * - Provides question data
+     * - Handles adaptive learning (weights per question)
+     * - Acts as data layer abstraction for ViewModel
+     */
     val quizEngine = remember {
         QuestionRepository(context)
     }
 
-    // ✅ FIX 2: pass correct dependency
+    /**
+     * Shared QuizViewModel instance
+     *
+     * - Survives across navigation destinations
+     * - Maintains quiz state globally
+     * - Receives QuizEngine via constructor injection
+     */
     val quizViewModel = remember {
         QuizViewModel(
             application = context.applicationContext as Application,
             quizEngine = quizEngine
         )
     }
+
+
+
+    // ---------------------------------------------------------
+    // NAVIGATION GRAPH
+    // ---------------------------------------------------------
 
     NavHost(
         navController = navController,

@@ -13,11 +13,24 @@ import androidx.navigation.NavController
 import androidx.compose.material3.contentColorFor
 import com.example.geoquiz.viewmodel.QuizViewModel
 
+
+
+/**
+ * QuizScreen
+ **
+ * Responsibilities:
+ * - Displays current quiz question and answer options
+ * - Shows quiz progress (question index, progress bar, points)
+ * - Handles user answer selection
+ * - Provides instant feedback (correct / incorrect indicators)
+ * - Navigates to next question or result screen
+ *
+ * Data source:
+ * - QuizViewModel (shared state holder for quiz session)
+ *
+ */
 @Composable
-fun QuizScreen(
-    navController: NavController,
-    viewModel: QuizViewModel
-) {
+fun QuizScreen(navController: NavController, viewModel: QuizViewModel) {
 
     val question = viewModel.currentQuestion
 
@@ -27,7 +40,8 @@ fun QuizScreen(
             .padding(20.dp)
     ) {
 
-        // TOP INFO
+
+        // TOP INFO (level + points)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -38,7 +52,9 @@ fun QuizScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // PROGRESS
+
+
+        // PROGRESS INDICATOR
         LinearProgressIndicator(
             progress = { (viewModel.currentQuestionIndex + 1f) / viewModel.getTotalQuestions() },
             modifier = Modifier.fillMaxWidth()
@@ -50,6 +66,8 @@ fun QuizScreen(
         )
 
         Spacer(modifier = Modifier.height(24.dp))
+
+
 
         // QUESTION CARD
         Card(
@@ -65,7 +83,9 @@ fun QuizScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // OPTIONS
+
+
+        // ANSWER OPTIONS
         question.options.forEach { option ->
 
             val isCorrect = option == question.correctAnswer
@@ -117,7 +137,9 @@ fun QuizScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // NEXT BUTTON
+
+
+        // NEXT QUESTION BUTTON (only after answer)
         if (viewModel.answerSubmitted) {
             Button(
                 onClick = {

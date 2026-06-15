@@ -9,11 +9,22 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.geoquiz.viewmodel.QuizViewModel
 
+
+
+/**
+ * ResultScreen
+ **
+ * Responsibilities:
+ * - Shows final score summary
+ * - Displays earned and total points
+ * - Provides navigation back to Home screen
+ *
+ * Data source:
+ * - QuizViewModel (shared application state)
+ */
 @Composable
-fun ResultScreen(
-    navController: NavController,
-    viewModel: QuizViewModel
-) {
+fun ResultScreen(navController: NavController, viewModel: QuizViewModel) {
+
 
     Column(
         modifier = Modifier
