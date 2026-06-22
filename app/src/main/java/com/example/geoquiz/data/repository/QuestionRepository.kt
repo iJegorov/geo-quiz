@@ -51,10 +51,7 @@ class QuestionRepository(private val context: Context) : QuizEngine {
     // ---------------------------------------------------------
     // QUIZ ENGINE (UNIQUE + WEIGHTED SELECTION)
     // ---------------------------------------------------------
-    override fun getQuestions(
-        difficulty: String,
-        limit: Int
-    ): List<Question> {
+    override fun getQuestions(difficulty: String, limit: Int): List<Question> {
 
         val base = loadQuestions().filter {
             it.difficulty.equals(difficulty, ignoreCase = true)

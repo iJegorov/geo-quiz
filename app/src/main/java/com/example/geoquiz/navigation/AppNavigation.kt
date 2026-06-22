@@ -66,23 +66,17 @@ fun AppNavigation() {
     // NAVIGATION GRAPH
     // ---------------------------------------------------------
 
-    NavHost(
-        navController = navController,
-        startDestination = "home"
-    ) {
+    NavHost(navController = navController, startDestination = "home") {
 
         composable("home") {
             HomeScreen(navController, quizViewModel)
         }
-
         composable("quiz") {
             QuizScreen(navController, quizViewModel)
         }
-
         composable("result") {
             ResultScreen(navController, quizViewModel)
         }
-
         composable("statistics") {
             StatisticsScreen(navController, quizViewModel)
         }
